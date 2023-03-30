@@ -18,7 +18,7 @@ class Parser:
         return [state, inpt, dest]
     
     def parse(self):
-        f = open('./var.txt')
+        f = open("./../resources/var.txt")
         states = set([])
         alphabet = []
         accept_states = []
