@@ -1,26 +1,38 @@
 from lexer.lexer import Lexer
+from grammar.grammar import Grammar
+from fa import *
+from utils import *
 
-code = '''
-func process() {
-    var x = 123;
-    var y = "hello, world!";
-    set_gain(x + 456);
-    if (x > 100) {
-        return y;
-    } else {
-        for i = 0, 10 {
-            delay(i);
-        }
-        break;
-    }
+
+# productions:
+# S -> A 
+
+# A -> aX 
+# A -> bX 
+
+# X -> e 
+# X -> BX 
+# X -> b 
+
+# B -> AD 
+
+# D -> aD 
+# D -> a 
+
+# C -> Ca 
+
+productions = {
+    'S' : ['A'],
+    'A' : ['aX', 'bX'],
+    'X' : ['', 'BX', 'b'],
+    'B' : ['AD'],
+    'D' : ['aD', 'a'],
+    'C' : ['Ca']
 }
-'''
 
-
-tokens = list(Lexer(code))
-
-
-print("Tokens:")
-print(tokens[:60])
-
-
+grm = Grammar(productions)
+grm.visualize()
+grm.to_cnf() 
+ 
+# print(gr qm.rules)
+# print(grm.generate_string())
