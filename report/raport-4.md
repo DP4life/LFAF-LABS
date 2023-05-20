@@ -105,7 +105,7 @@ def bfs(self, nonterminal):
             del self.rules[i]   
 ```
 
-* Removing nullable (epsilon) productions. I add every nonterminal that leads to an epsilon to a list of nonterminals. Then, I add the versions of the nullable productions in which they are equal to an empty string.
+* Removing nullable (epsilon) productions. I add every nonterminal that leads to an epsilon to a list of nonterminals. Then, I add the versions of the nullable productions in which they are equal to an empty string. So if S -> XAB and X and B are nullable, then S -> XAB | AB | XA
 ```python
 def remove_nullable(self):
     nullable = []
@@ -121,7 +121,7 @@ def remove_nullable(self):
                 if k in nullable:
                     self.rules[i].append(j[:j.rfind(k)])
 ```
-* Removing the unit productions (productions of type A -> B). SThese productions are solved by deleting constructing a separate dictionary with the unit productions and removing them from the main rules. Then, iterating through the new temporary dictionary, I add the productions of B to A (in the context of A - > B, so if B -> x1, x2... then A -> x1, x2... etc)
+* Removing the unit productions (productions of type A -> B). These productions are solved by constructing a separate dictionary with the unit productions and removing them from the main rules. Then, iterating through the new temporary dictionary, I add the productions of B to A (in the context of A - > B, so if B -> x1, x2... then A -> x1, x2... etc)
 ```python
 def remove_units(self, nonterminal):
     g = {}
@@ -178,76 +178,6 @@ def remove_mixing(self, terminal, upper_alphabet):
 * My function only works on my Grammar (or maybe some other grammar too but the range is pretty slim)
 ## Output
 ```
-S  ->  A
-A  ->  aX
-A  ->  bX
-X  ->
-X  ->  BX
-X  ->  b
-B  ->  AD
-D  ->  aD
-D  ->  a
-C  ->  Ca
-========================================================
-If the starting string S is on the right hand side of any production, adds a new starting nonterminal
-S  ->  A
-A  ->  aX
-A  ->  bX
-X  ->
-X  ->  BX
-X  ->  b
-B  ->  AD
-D  ->  aD
-D  ->  a
-========================================================
-Removed the epsilon producitons
-S  ->  A
-A  ->  aX
-A  ->  bX
-A  ->  a
-A  ->  b
-X  ->  BX
-X  ->  b
-X  ->  B
-B  ->  AD
-D  ->  aD
-D  ->  a
-========================================================
-Removed the unit productions
-S  ->  aX
-S  ->  bX
-S  ->  a
-S  ->  b
-A  ->  aX
-A  ->  bX
-A  ->  a
-A  ->  b
-X  ->  BX
-X  ->  b
-X  ->  AD
-B  ->  AD
-D  ->  aD
-D  ->  a
-========================================================
-Removed productions of type A -> aB
-S  ->  a
-S  ->  b
-S  ->  IX
-S  ->  KX
-A  ->  a
-A  ->  b
-A  ->  IX
-A  ->  KX
-X  ->  BX
-X  ->  b
-X  ->  AD
-B  ->  AD
-D  ->  a
-D  ->  ID
-I  ->  a
-K  ->  b
-
-C:\Users\micha\OneDrive\Desktop\University\Semestrul IV\LFAF\Labs\LFAF-LABS\src>python main.py
 S  ->  A
 A  ->  aX
 A  ->  bX
